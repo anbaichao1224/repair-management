@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.SysUserDao">
+
+	<resultMap id="BaseMap" type="io.renren.modules.sys.entity.SysUserEntityss">
+
+	</resultMap>
+
+
+	<select id="queryAllList" resultType="io.renren.modules.sys.entity.SysUserEntityss">
+		select u.* from sys_user u
+		<where>
+			<if test="params.username !=null and params.username !=''">
+				and u.username like '%${params.username}%'
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询用户的所有权限 -->
+	<select id="queryAllPerms" resultType="string">
+		select m.perms from sys_user_role ur 
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
+			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id 
+		where ur.user_id = #{userId}
+	</select>
+	
+	<!-- 查询用户的所有菜单ID --> 
+	<select id="queryAllMenuId" resultType="long">
+		select distinct rm.menu_id from sys_user_role ur 
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
+		where ur.user_id = #{userId}
+	</select>
+	
+	<select id="queryByUserName" resultType="io.renren.modules.sys.entity.SysUserEntity">
+		select * from sys_user where username = #{username}
+	</select>
+
+	<select id="queryTitlePage" resultMap="BaseMap">
+		SELECT
+			su1.user_id as userId,
+		  su1.username,
+		  ti.title
+		FROM
+			sys_user  su1
+		LEFT JOIN sys_title ti
+				ON su1.title = ti.id
+		<where>
+			<if test="params.titlename !=null and params.titlename !=''">
+				and ti.title > #{params.titlename}
+			</if>
+			<if test="params.id !=null and params.id !=''">
+				and su1.id = #{params.id}
+			</if>
+			<if test="params.username !=null and params.username !=''">
+				and sul.username like '%${params.username}%'
+			</if>
+		</where>
+		order by su1.title
+	</select>
+</mapper>

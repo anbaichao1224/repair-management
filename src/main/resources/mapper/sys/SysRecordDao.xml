@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.SysRecordDao">
+
+	<select id="queryRecordList" resultType="io.renren.modules.sys.entity.SysRecordEntity">
+		SELECT
+			record.id,
+			record.pid,
+			record.creuser,
+			record.user,
+			record.foruser,
+			record.credate,
+			record.status,
+			user1.username AS username,
+			user2.username AS forusername,
+			user3.username as creusername
+		FROM
+			sys_record record
+			LEFT JOIN sys_user user1 ON user1.user_id = record.user
+			LEFT JOIN sys_user user2 ON user2.user_id = record.foruser
+			LEFT join sys_user user3 on user3.user_id = record.creuser
+			where pid = #{pid}
+			order by record desc
+	</select>
+
+	<insert id="saveRecord">
+		insert into sys_record (id,pid,user,foruser,creuser,credate,status) values
+		(#{id},#{pid},#{user},#{foruser},#{creuser},now(),#{status})
+	</insert>
+
+</mapper>

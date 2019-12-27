@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.SysOrgDao">
+
+	<resultMap id="BaseMap" type="io.renren.modules.sys.entity.SysOrgEntity">
+
+	</resultMap>
+
+	<select id="queryList" resultType="io.renren.modules.sys.entity.SysOrgEntity">
+		SELECT
+			suser.user_id,
+			suser.username,
+			sorg.id,
+			sorg.`name`,
+			sorg.orderby,
+			sorg.parentid,
+			concat_ws(":",sorg.`name`,suser.username) as showname
+		FROM
+			sys_org sorg
+		LEFT JOIN sys_user suser ON suser.orgid = sorg.id and suser.isadmin = 1
+		order by sorg.orderby
+	</select>
+
+</mapper>

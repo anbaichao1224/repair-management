@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.SysTaskDao">
+
+	<select id="queryTaskPage" resultType="io.renren.modules.sys.entity.SysTaskEntity">
+		SELECT
+				task.*, org.`name` AS orgname,
+				suser.username AS assignername
+		FROM
+				sys_task task
+		LEFT JOIN sys_org org ON org.id = task.org
+		LEFT JOIN sys_user suser ON suser.user_id = task.assigner
+		<where>
+			<if test="params.title !=null and params.title !=''">
+				and task.title like '%${params.title}%'
+			</if>
+			<if test="params.status !=null and params.status !=''">
+				and task.status = #{params.status}
+			</if>
+			<if test="params.titles !=null">
+				<if test="params.title != 3">
+					<if test="params.creuserid !=null and params.creuserid !=''">
+						and task.creuserid = #{params.creuserid}
+					</if>
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<select id="getTaskEntity" resultType="io.renren.modules.sys.entity.SysTaskEntity">
+		select * from sys_task where id = #{params.id}
+	</select>
+
+
+	<insert id="saveTaskEntity">
+		insert into sys_task (id,title,taskdate,`position`,`desc`,creuser,cremobile,creuserid,org,assigner,status,credate,types) values (
+			#{id},#{title},#{taskdate},#{position},#{desc},#{creuser},#{cremobile},#{creuserid},#{org},#{assigner},#{status},now(),#{types}
+		)
+	</insert>
+
+	<update id="updateTaskEntity">
+		update sys_task
+			set assigner = #{assigner},
+				status = #{status}
+			where id = #{id}
+	</update>
+
+
+	<delete id="deleteTaskEntity">
+		delete from sys_task where id = #{id}
+	</delete>
+</mapper>

@@ -42,7 +42,7 @@ public class TaskPicServiceImpl extends ServiceImpl<TaskPicDao, TaskPicEntity> i
 	}
 
 	@Override
-	public void deletePic(Map<String, Object> params) {
-		baseMapper.deletePic(params);
+	public void deletePic(String id) {
+		baseMapper.deletePic(id);
 	}
 }

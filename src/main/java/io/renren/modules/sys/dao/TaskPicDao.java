@@ -23,6 +23,6 @@ public interface TaskPicDao extends BaseMapper<TaskPicEntity> {
 
 	void savePic(List<TaskPicEntity> picEntityList);
 
-	void deletePic(@RequestParam("params") Map<String,Object> params);
+	void deletePic(String id);
 
 }

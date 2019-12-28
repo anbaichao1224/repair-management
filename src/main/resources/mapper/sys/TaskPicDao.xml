@@ -4,13 +4,12 @@
 <mapper namespace="io.renren.modules.sys.dao.TaskPicDao">
 	
 	<select id="getPic" resultType="io.renren.modules.sys.entity.TaskPicEntity">
-		select * from task_pic where pid = #{params.id}
+		select * from task_pic where pid = #{id}
 	</select>
 
 	<insert id="savePic" parameterType="list">
-		insert  all
-		<foreach collection="list" item="pic" index="index" >
-			into task_pic (id,picname,path,pid) values
+		insert into task_pic (id,picname,path,pid) values
+		<foreach collection="list" item="pic" index="index" separator=",">
 			(#{pic.id},#{pic.picname},#{pic.path},#{pic.pid})
 		</foreach>
 	</insert>
@@ -18,12 +17,7 @@
 	<delete id="deletePic">
 		delete from task_pic
 		WHERE
-		<if test="params.id !=null and params.id !=''">
-			id = #{params.id}
-		</if>
-		<if test="params.pid !=null and params.pid !=''">
-			id = #{params.pid}
-		</if>
+			pid = #{id}
 	</delete>
 
 </mapper>

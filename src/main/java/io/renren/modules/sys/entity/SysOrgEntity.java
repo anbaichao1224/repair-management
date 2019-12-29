@@ -42,19 +42,14 @@ public class SysOrgEntity implements Serializable {
 	 */
 	private Integer orderby;
 
+	@TableField(exist=false)
 	private Long userid;
 
+	@TableField(exist=false)
 	private String username;
 
+	@TableField(exist=false)
 	private String showname;
-
-	public String getShowname() {
-		return showname;
-	}
-
-	public void setShowname(String showname) {
-		this.showname = showname;
-	}
 
 	/**
 	 * ztree属性

@@ -19,8 +19,10 @@ import io.renren.modules.sys.entity.SysUserEntityss;
 import io.renren.modules.sys.service.SysOrgService;
 import io.renren.modules.sys.service.SysTaskService;
 import io.renren.modules.sys.service.SysUserService;
+import io.renren.modules.sys.service.TaskPicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,9 @@ import java.util.Map;
 
 @Service("sysTaskServiceImpl")
 public class SysTaskServiceImpl extends ServiceImpl<SysTaskDao, SysTaskEntity> implements SysTaskService {
+
+    @Autowired
+    private TaskPicService taskPicService;
 
 	@Override
 	public Page<SysTaskEntity> queryTaskPage(Map<String, Object> params) {
@@ -57,7 +62,11 @@ public class SysTaskServiceImpl extends ServiceImpl<SysTaskDao, SysTaskEntity> i
 	}
 
 	@Override
+    @Transactional
 	public void deleteTaskEntity(String id) {
-		baseMapper.deleteTaskEntity(id);
+
+	    baseMapper.deleteTaskEntity(id);
+	    taskPicService.deletePic(id);
+
 	}
 }

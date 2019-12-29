@@ -4,13 +4,13 @@
 <mapper namespace="io.renren.modules.sys.dao.TaskPicDao">
 	
 	<select id="getPic" resultType="io.renren.modules.sys.entity.TaskPicEntity">
-		select * from task_pic where pid = #{id}
+		select * from task_pic where pid = #{id} order by picname
 	</select>
 
 	<insert id="savePic" parameterType="list">
 		insert into task_pic (id,picname,path,pid) values
 		<foreach collection="list" item="pic" index="index" separator=",">
-			(#{pic.id},#{pic.picname},#{pic.path},#{pic.pid})
+			(#{pic.id},now(),#{pic.path},#{pic.pid})
 		</foreach>
 	</insert>
 

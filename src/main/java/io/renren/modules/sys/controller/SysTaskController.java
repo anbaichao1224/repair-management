@@ -155,6 +155,17 @@ public class SysTaskController extends AbstractController {
 	}
 
 
+	@PostMapping("/delete/{id}")
+	public R delete(@PathVariable("id") String id){
+		try {
+			sysTaskService.deleteTaskEntity(id);
+			return R.ok();
+		}catch (Exception e){
+			e.printStackTrace();
+			return R.error(1,"删除任务出错!");
+		}
+	}
+
 
 
 	/**

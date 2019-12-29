@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018 人人开源 All rights reserved.
+ * Copyright (c) 2018 物业移动办公平台 All rights reserved.
  *
  * https://www.renren.io
  *

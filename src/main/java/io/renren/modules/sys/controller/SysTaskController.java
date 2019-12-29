@@ -128,11 +128,14 @@ public class SysTaskController extends AbstractController {
 
 			//获取照片
 			List<TaskPicEntity> picEntityList = systask.getPicList();
-			picEntityList.forEach(taskPicEntity -> {
-				taskPicEntity.setId(UUID.randomUUID().toString());
-				taskPicEntity.setPid(sysTaskEntity.getId());
-			});
-			taskPicService.savePic(picEntityList);
+			if(picEntityList.size()>0){
+                picEntityList.forEach(taskPicEntity -> {
+                    taskPicEntity.setId(UUID.randomUUID().toString());
+                    taskPicEntity.setPid(sysTaskEntity.getId());
+                });
+                taskPicService.savePic(picEntityList);
+            }
+
 
 			//新建记录表
 			SysRecordEntity sysRecordEntity = new SysRecordEntity();

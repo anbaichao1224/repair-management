@@ -83,7 +83,6 @@ public class SysOrgController extends AbstractController {
 		}catch (Exception e){
 			return R.error(1,"获取组织机构详情出错!");
 		}
-
 	}
 	
 	/**

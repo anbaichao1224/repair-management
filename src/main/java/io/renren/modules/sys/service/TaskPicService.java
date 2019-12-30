@@ -24,10 +24,10 @@ import java.util.Map;
  */
 public interface TaskPicService extends IService<TaskPicEntity> {
 
-	List<TaskPicEntity> getTaskPic(@Param("params")Map<String,Object> params);
+	List<TaskPicEntity> getTaskPic(Map<String,Object> params);
 
 	void savePic(List<TaskPicEntity> picEntityList);
 
-	void deletePic(@RequestParam("params") Map<String,Object> params);
+	void deletePic(String id);
 
 }

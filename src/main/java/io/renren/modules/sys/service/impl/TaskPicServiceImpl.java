@@ -34,6 +34,7 @@ public class TaskPicServiceImpl extends ServiceImpl<TaskPicDao, TaskPicEntity> i
 		return baseMapper.getPic(params);
 	}
 
+
 	@Override
 	public void savePic(List<TaskPicEntity> picEntityList) {
 		if(picEntityList.size()>0){
@@ -42,7 +43,7 @@ public class TaskPicServiceImpl extends ServiceImpl<TaskPicDao, TaskPicEntity> i
 	}
 
 	@Override
-	public void deletePic(Map<String, Object> params) {
-		baseMapper.deletePic(params);
+	public void deletePic(String id) {
+		baseMapper.deletePic(id);
 	}
 }

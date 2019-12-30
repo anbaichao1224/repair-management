@@ -41,7 +41,16 @@
 
 	<update id="updateTaskEntity">
 		update sys_task
-			set assigner = #{assigner},
+			set title = #{title},
+				taskdate = #{taskdate},
+				`position` = #{position},
+				`desc` = #{desc},
+				creuser = #{creuser},
+				cremobile = #{cremobile},
+				creuserid = #{creuserid},
+				org = #{org},
+				types = #{types},
+				assigner = #{assigner},
 				status = #{status}
 			where id = #{id}
 	</update>

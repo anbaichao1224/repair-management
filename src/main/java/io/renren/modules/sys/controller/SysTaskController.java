@@ -22,10 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 组织结构管理
@@ -63,6 +60,17 @@ public class SysTaskController extends AbstractController {
 	}
 
 
+	/**
+	 * 所有组织结构列表
+	 */
+	@PostMapping("/lists")
+	//@RequiresPermissions("sys:task:list")
+	public R lists(@RequestBody Map<String,Object> params){
+		Page<SysTask> sysTaskPage = sysTaskService.queryTaskPicPage(params);
+		return  R.ok().put("page",sysTaskPage);
+	}
+
+
 	@PostMapping("info")
 	public R info(@RequestBody Map<String,Object> params){
 		try {
@@ -71,7 +79,10 @@ public class SysTaskController extends AbstractController {
 			SysTaskEntity sysTaskEntity = sysTaskService.getTaskEntity(params);
 			sysTask.setSysTaskEntity(sysTaskEntity);
 
-			return R.ok().put("task",sysTaskEntity);
+			List<TaskPicEntity> picList = taskPicService.getTaskPic(params);
+			sysTask.setPicList(picList);
+
+			return R.ok().put("task",sysTask);
 		}catch (Exception e){
 			e.printStackTrace();
 			return R.error(1,"获取录入信息出错!");
@@ -112,6 +123,60 @@ public class SysTaskController extends AbstractController {
 			return R.error(1,"保存任务出错！");
 		}
 	}
+
+
+	@PostMapping("/updateTask")
+	public R updateTask(@RequestBody SysTask systask){
+		try {
+			//获取任务
+			SysTaskEntity sysTaskEntity = systask.getSysTaskEntity();
+
+			sysTaskService.updateTaskEntity(sysTaskEntity);
+
+			Map<String,Object> params = new HashMap<>();
+			params.put("id",sysTaskEntity.getId());
+			taskPicService.deletePic(sysTaskEntity.getId());
+
+			//获取照片
+			List<TaskPicEntity> picEntityList = systask.getPicList();
+			if(picEntityList.size()>0){
+                picEntityList.forEach(taskPicEntity -> {
+                    taskPicEntity.setId(UUID.randomUUID().toString());
+                    taskPicEntity.setPid(sysTaskEntity.getId());
+                });
+                taskPicService.savePic(picEntityList);
+            }
+
+
+			//新建记录表
+			SysRecordEntity sysRecordEntity = new SysRecordEntity();
+			sysRecordEntity.setId(UUID.randomUUID().toString());
+			sysRecordEntity.setPid(sysTaskEntity.getId());
+			sysRecordEntity.setCreuser(sysTaskEntity.getCreuserid());
+			sysRecordEntity.setUser(sysTaskEntity.getCreuserid());
+			sysRecordEntity.setForuser(sysTaskEntity.getAssigner());
+			sysRecordEntity.setStatus(1L);
+			sysRecordService.saveRecord(sysRecordEntity);
+
+			return R.ok();
+		}catch (Exception e){
+			e.printStackTrace();
+			return R.error(1,"更新任务出错!");
+		}
+	}
+
+
+	@PostMapping("/delete/{id}")
+	public R delete(@PathVariable("id") String id){
+		try {
+			sysTaskService.deleteTaskEntity(id);
+			return R.ok();
+		}catch (Exception e){
+			e.printStackTrace();
+			return R.error(1,"删除任务出错!");
+		}
+	}
+
 
 
 	/**

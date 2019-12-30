@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 系统用户
@@ -58,4 +59,6 @@ public class SysTaskEntity implements Serializable {
 	private String assignername;
 
 
+	@TableField(exist=false)
+	private List<TaskPicEntity> picEntityList;
 }

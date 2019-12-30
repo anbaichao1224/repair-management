@@ -60,6 +60,17 @@ public class SysTaskController extends AbstractController {
 	}
 
 
+	/**
+	 * 所有组织结构列表
+	 */
+	@PostMapping("/lists")
+	//@RequiresPermissions("sys:task:list")
+	public R lists(@RequestBody Map<String,Object> params){
+		Page<SysTask> sysTaskPage = sysTaskService.queryTaskPicPage(params);
+		return  R.ok().put("page",sysTaskPage);
+	}
+
+
 	@PostMapping("info")
 	public R info(@RequestBody Map<String,Object> params){
 		try {

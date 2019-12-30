@@ -34,6 +34,7 @@ public class TaskPicServiceImpl extends ServiceImpl<TaskPicDao, TaskPicEntity> i
 		return baseMapper.getPic(params);
 	}
 
+
 	@Override
 	public void savePic(List<TaskPicEntity> picEntityList) {
 		if(picEntityList.size()>0){

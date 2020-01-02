@@ -79,6 +79,12 @@ public class SysTaskServiceImpl extends ServiceImpl<SysTaskDao, SysTaskEntity> i
 		return pages.setRecords(taskList);
 	}
 
+
+	@Override
+	public void udpateTaskForAssigner(Map<String, Object> params) {
+		baseMapper.updateAssigner(params);
+	}
+
 	@Override
 	public SysTaskEntity getTaskEntity(Map<String, Object> params) {
 		return baseMapper.getTaskEntity(params);

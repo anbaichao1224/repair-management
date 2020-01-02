@@ -59,4 +59,13 @@
 	<delete id="deleteTaskEntity">
 		delete from sys_task where id = #{id}
 	</delete>
+
+
+	<update id="updateAssigner">
+		update sys_task
+		   set assigner = #{assigner,jdbcType=VARCHAR},
+		   	   status = #{status,jdbcType=VARCHAR}
+			where id = #{id}
+	</update>
+
 </mapper>

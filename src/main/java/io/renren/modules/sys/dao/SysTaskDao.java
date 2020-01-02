@@ -34,6 +34,8 @@ public interface SysTaskDao extends BaseMapper<SysTaskEntity> {
 
 	void updateTaskEntity(SysTaskEntity sysTaskEntity);
 
+	void updateAssigner(Map<String,Object> params);
+
 	void deleteTaskEntity(String id);
 
 }

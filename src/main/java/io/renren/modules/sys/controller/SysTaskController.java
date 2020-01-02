@@ -11,6 +11,7 @@ import io.renren.modules.sys.service.SysOrgService;
 import io.renren.modules.sys.service.SysRecordService;
 import io.renren.modules.sys.service.SysTaskService;
 import io.renren.modules.sys.service.TaskPicService;
+import oracle.jdbc.proxy.annotation.Post;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,6 +163,33 @@ public class SysTaskController extends AbstractController {
 		}catch (Exception e){
 			e.printStackTrace();
 			return R.error(1,"更新任务出错!");
+		}
+	}
+
+
+	@PostMapping("/updateAssigner")
+	public R updateAssigner(@RequestBody Map<String,Object> params){
+		try {
+			String id = (String)params.get("id");
+			Long updateUser = (Long)params.get("updateUser");
+			Long assigner = (Long) params.get("assigner");
+			String status = (String)params.get("status");
+
+			sysTaskService.udpateTaskForAssigner(params);
+
+			//新建记录表
+			SysRecordEntity sysRecordEntity = new SysRecordEntity();
+			sysRecordEntity.setId(UUID.randomUUID().toString());
+			sysRecordEntity.setPid(id);
+			sysRecordEntity.setCreuser(updateUser);
+			sysRecordEntity.setUser(updateUser);
+			sysRecordEntity.setForuser(assigner);
+			sysRecordEntity.setStatus(2L);
+			sysRecordService.saveRecord(sysRecordEntity);
+			return R.ok();
+		}catch (Exception e){
+			e.printStackTrace();
+			return R.error(1,"分配处理人出错!");
 		}
 	}
 

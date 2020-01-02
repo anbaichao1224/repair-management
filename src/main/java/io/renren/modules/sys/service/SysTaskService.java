@@ -25,6 +25,8 @@ public interface SysTaskService extends IService<SysTaskEntity> {
 
 	SysTaskEntity getTaskEntity(Map<String,Object> params);
 
+	void udpateTaskForAssigner(Map<String,Object> params);
+
 	void saveTaskEntity(SysTaskEntity sysTaskEntity);
 
 	void updateTaskEntity(SysTaskEntity sysTaskEntity);

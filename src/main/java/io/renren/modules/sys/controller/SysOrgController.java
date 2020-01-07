@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 组织结构管理
@@ -133,6 +134,18 @@ public class SysOrgController extends AbstractController {
 			return R.error("删除组织机构出错!");
 		}
 	}
+
+
+    @PostMapping("/getOrgUser")
+    public R getOrgUser(@RequestBody Map<String,Object> params){
+        try {
+            List<Map<String,Object>> userList =sysOrgService.getOrgUser(params);
+            return R.ok().put("userList",userList);
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.error(1,"获取组织机构下用户出错!");
+        }
+    }
 	
 	/**
 	 * 验证参数是否正确
@@ -147,4 +160,8 @@ public class SysOrgController extends AbstractController {
 		}
 
 	}
+
+
+
+
 }

@@ -22,4 +22,22 @@
 		order by sorg.orderby
 	</select>
 
+
+	<select id="getOrgUser" resultType="map">
+		SELECT
+			users.user_id as userid,
+		  	users.username
+		FROM
+			sys_user users
+		WHERE
+			users.orgid = (
+			SELECT
+				id
+			FROM
+				sys_org so
+			WHERE
+			so.id IN ( SELECT orgid FROM sys_user su WHERE su.user_id = #{assigner} ))
+			AND users.isadmin = '0'
+	</select>
+
 </mapper>

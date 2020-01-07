@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import io.renren.modules.sys.entity.SysOrgEntity;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -38,4 +39,7 @@ public interface SysOrgService extends IService<SysOrgEntity> {
 	 * 删除
 	 */
 	void delete(Long id);
+
+	List<Map<String,Object>> getOrgUser(Map<String,Object> params);
+
 }

@@ -3,6 +3,7 @@ package io.renren.modules.sys.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * @author Mark sunlightcs@gmail.com
  */
 @TableName("sys_org")
+@Data
 public class SysOrgEntity implements Serializable {
 
 	/**
@@ -59,6 +61,8 @@ public class SysOrgEntity implements Serializable {
 
 	@TableField(exist=false)
 	private List<?> list;
+
+
 
 	public Long getId() {
 		return id;

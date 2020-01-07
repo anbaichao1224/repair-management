@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Service("sysOrgServiceImpl")
@@ -67,29 +68,8 @@ public class SysOrgServiceImpl extends ServiceImpl<SysOrgDao, SysOrgEntity> impl
 		this.removeById(id);
 	}
 
-//	/**
-//	 * 获取所有菜单列表
-//	 */
-//	private List<SysOrgEntity> getAllMenuList(List<Long> idList){
-//		//查询根菜单列表
-//		List<SysMenuEntity> menuList = queryListParentId(0L, idList);
-//		//递归获取子菜单
-//		getMenuTreeList(menuList, menuIdList);
-//
-//		return menuList;
-//	}
-//
-//	/**
-//	 * 递归
-//	 */
-//	private List<SysOrgEntity> getMenuTreeList(List<SysOrgEntity> menuList, List<Long> menuIdList){
-//		List<SysOrgEntity> subMenuList = new ArrayList<SysOrgEntity>();
-//
-//		for(SysMenuEntity entity : menuList){
-//			entity.setList(getMenuTreeList(queryListParentId(entity.getMenuId(), menuIdList), menuIdList));
-//			subMenuList.add(entity);
-//		}
-//
-//		return subMenuList;
-//	}
+	@Override
+	public List<Map<String, Object>> getOrgUser(Map<String, Object> params) {
+		return baseMapper.getOrgUser(params);
+	}
 }
